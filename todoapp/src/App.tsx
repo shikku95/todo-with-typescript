@@ -10,7 +10,9 @@ function App() {
     setTasks((prev) => [...prev, inputValue]);
     setInputValue("");
   };
-  const handleDelete = () => {};
+  const handleDelete = (value: string) => {
+    setTasks((prev) => prev.filter((data) => data != value));
+  };
   return (
     <>
       <div className="flex justify-center items-center h-full w-full flex-col gap-8">
@@ -31,7 +33,7 @@ function App() {
         {tasks.map((data, i) => (
           <div key={i} className="flex justify-between w-96 text-red-900">
             <p>{data}</p>
-            <MdDelete />
+            <MdDelete onClick={() => handleDelete(data)} />
           </div>
         ))}
       </div>
