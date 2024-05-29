@@ -1,17 +1,24 @@
 import { useState } from "react";
 import "./App.css";
 import { MdDelete } from "react-icons/md";
+type Tasks = {
+  title: string;
+  id: string;
+};
 
 function App() {
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<Tasks[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTasks((prev) => [...prev, inputValue]);
+    setTasks((prev) => [
+      ...prev,
+      { title: inputValue, id: Date.now().toString() },
+    ]);
     setInputValue("");
   };
-  const handleDelete = (index: number) => {
-    setTasks((prev) => prev.filter((_, i) => i !== index));
+  const handleDelete = (id: string) => {
+    setTasks((prev) => prev.filter((data) => data.id !== id));
   };
 
   return (
@@ -31,13 +38,13 @@ function App() {
             Add
           </button>
         </form>
-        {tasks.map((data, i) => (
+        {tasks.map((data) => (
           <div
-            key={i}
+            key={data.id}
             className="flex justify-between w-96 text-red-900 border border-green-600 rounded px-4 py-1 items-center"
           >
-            <p>{data}</p>
-            <MdDelete onClick={() => handleDelete(i)} />
+            <p>{data.title}</p>
+            <MdDelete onClick={() => handleDelete(data.id)} />
           </div>
         ))}
       </div>
