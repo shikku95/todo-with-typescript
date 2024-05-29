@@ -10,9 +10,10 @@ function App() {
     setTasks((prev) => [...prev, inputValue]);
     setInputValue("");
   };
-  const handleDelete = (value: string) => {
-    setTasks((prev) => prev.filter((data) => data != value));
+  const handleDelete = (index: number) => {
+    setTasks((prev) => prev.filter((_, i) => i !== index));
   };
+
   return (
     <>
       <div className="flex justify-center items-center h-full w-full flex-col gap-8">
@@ -31,9 +32,12 @@ function App() {
           </button>
         </form>
         {tasks.map((data, i) => (
-          <div key={i} className="flex justify-between w-96 text-red-900">
+          <div
+            key={i}
+            className="flex justify-between w-96 text-red-900 border border-green-600 rounded px-4 py-1 items-center"
+          >
             <p>{data}</p>
-            <MdDelete onClick={() => handleDelete(data)} />
+            <MdDelete onClick={() => handleDelete(i)} />
           </div>
         ))}
       </div>
